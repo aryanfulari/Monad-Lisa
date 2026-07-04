@@ -70,6 +70,12 @@ def get_badges(agent_address: str) -> list[dict]:
         },
 
         {
+            "name": "Verified",
+            "icon": "✅",
+            "earned": len(achievements) >= 3,
+        },
+
+        {
             "name": "5 Tasks",
             "icon": "🔥",
             "earned": len(achievements) >= 5,
