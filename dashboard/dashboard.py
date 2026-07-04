@@ -65,37 +65,37 @@ def get_badges(agent_address: str) -> list[dict]:
 
         {
             "name": "First Task",
-            "icon": "🏅",
+            "icon": "",
             "earned": len(achievements) >= 1,
         },
 
         {
             "name": "Verified",
-            "icon": "✅",
+            "icon": "",
             "earned": len(achievements) >= 3,
         },
 
         {
             "name": "5 Tasks",
-            "icon": "🔥",
+            "icon": "",
             "earned": len(achievements) >= 5,
         },
 
         {
             "name": "10 Tasks",
-            "icon": "🚀",
+            "icon": "",
             "earned": len(achievements) >= 10,
         },
 
         {
             "name": "Perfect Score",
-            "icon": "💯",
+            "icon": "",
             "earned": any(score == 100 for score in scores),
         },
 
         {
             "name": "High Performer",
-            "icon": "⭐",
+            "icon": "",
             "earned": average >= 90,
         },
 
