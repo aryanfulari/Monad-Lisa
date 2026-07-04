@@ -18,6 +18,7 @@ from dashboard.dashboard import (
     get_badges,
     get_performance_history,
 )
+from dashboard.leaderboard import get_leaderboard, get_leaderboard_sorted
 
 st.set_page_config(page_title="AgentPassport", page_icon="🛂", layout="wide")
 
@@ -148,6 +149,23 @@ with tab2:
     with r2[2]:
         with st.container(border=True):
             st.metric("Status",dashboard["status"])
+
+    st.subheader("🏆 Model Leaderboard")
+    leaderboard_data = get_leaderboard(account.address)
+    if not leaderboard_data:
+        st.info("No data yet.")
+    else:
+        sorted_data = get_leaderboard_sorted(account.address)
+        
+        # Chart
+        chart_data = [{"Model": k, "Average Score": v["avg_score"]} for k, v in sorted_data]
+        df_chart = pd.DataFrame(chart_data).set_index("Model")
+        df_chart = df_chart.sort_values("Average Score", ascending=True)
+        st.bar_chart(df_chart, horizontal=True)
+        
+        # Table
+        table_data = [{"Model": k, "Tasks Completed": v["count"], "Average Score": v["avg_score"]} for k, v in sorted_data]
+        st.dataframe(pd.DataFrame(table_data), use_container_width=True, hide_index=True)
 
     st.subheader("🏅 Badges")
     badges=get_badges(account.address)
