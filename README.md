@@ -1,263 +1,172 @@
-# AgentPassport
+# Monad-Lisa (AgentPassport)
 
-AI Worker + Judge Agent module built using the **Google Gemini API** for the **Monad Blitz Hackathon**.
-
-The project consists of two AI agents:
-
-- **Worker Agent** – Completes any task provided by the user.
-- **Judge Agent** – Evaluates how well the Worker Agent completed that task and assigns a score with feedback.
+## 1. One-Line Tagline
+**AI-powered credentials and task execution stored permanently on the high-performance Monad Blockchain.**
 
 ---
 
-# Project Structure
+## 2. Problem Statement
+As AI agents become more autonomous, there is no verifiable, immutable record of their performance, reliability, or the quality of their work over time. Users cannot easily trust an agent without a transparent history of its past actions and evaluations.
 
+---
+
+## 3. Solution
+**Monad-Lisa (AgentPassport)** introduces a dual-agent architecture to solve this. A **Worker Agent** completes tasks, and a **Judge Agent** evaluates the quality of the work. The resulting score and feedback are permanently logged on the **Monad Blockchain**, creating a verifiable, immutable "Passport" for AI models. 
+
+---
+
+## 4. Key Features
+- 🤖 **Dual-Agent Architecture:** Worker Agent executes tasks; Judge Agent evaluates them.
+- ⛓️ **Immutable Blockchain Logging:** All tasks, scores, and feedback are recorded on the Monad Testnet.
+- ⚡ **High-Speed Execution:** Built on Monad for ultra-fast, low-latency transaction finality.
+- 📊 **Dynamic Next.js Dashboard:** Real-time UI displaying agent stats, badges, and performance history.
+- 🏆 **Model Leaderboard:** Compare different Gemini models (2.5 Flash, 2.5 Pro, etc.) based on their average Judge scores.
+- 🏅 **Achievement System:** Earn badges (e.g., "Perfect Score", "High Performer") based on on-chain data.
+
+---
+
+## 5. Demo
+*(Add your Screenshots / GIF / Video links here)*
+
+---
+
+## 6. System Architecture
+```text
+User ──> Next.js Frontend ──> FastAPI Backend
+                                   │
+                                   ├──> 1. Worker Agent (Gemini) generates output
+                                   ├──> 2. Judge Agent (Gemini) scores output
+                                   └──> 3. Web3.py records data on Monad Testnet
 ```
-AgentPassport/
+
+---
+
+## 7. Workflow
+1. **Request:** User submits a prompt and selects an AI model via the frontend.
+2. **Execution:** The Python backend triggers the **Worker Agent** to complete the task.
+3. **Evaluation:** The **Judge Agent** reviews the worker's output and assigns a score (0-100) with feedback.
+4. **On-Chain Record:** The score, feedback, and task metadata are minted as an achievement on the Monad blockchain.
+5. **UI Update:** The dashboard fetches the updated on-chain data to refresh stats, badges, and the leaderboard.
+
+---
+
+## 8. Tech Stack
+- **Frontend:** Next.js (App Router), React, Vanilla CSS (Custom Glassmorphism UI)
+- **Backend:** Python, FastAPI, Uvicorn
+- **AI Integration:** Google Gemini API (`google-genai`)
+- **Blockchain:** Monad Testnet, Web3.py, Solidity
+
+---
+
+## 9. Smart Contract Overview
+The smart contract acts as the decentralized registry for the AgentPassport. It stores:
+- `agent_address`: The wallet address representing the AI agent.
+- `task`: A tagged string representing the executed prompt and model used.
+- `score`: The numerical evaluation from the Judge Agent.
+- `feedback`: Textual feedback justifying the score.
+
+---
+
+## 10. Project Structure
+```text
+Monad-Lisa/
 │
-├── agents.py          # Worker Agent + Judge Agent
-├── test_gemini.py     # Simple Gemini API test
-├── requirements.txt   # Required Python packages
-├── .env.example       # Example environment variables
-├── .gitignore
-└── README.md
+├── frontend/               # Next.js React Dashboard
+├── ai/                     # Worker and Judge Agent logic (Gemini)
+├── blockchain/             # Web3.py integration and Monad interactions
+├── dashboard/              # Data aggregation for Leaderboards and Badges
+├── api.py                  # FastAPI Backend Server
+├── pipeline.py             # Orchestrates the AI + Blockchain flow
+├── requirements.txt        # Python dependencies
+└── README.md               # Project documentation
 ```
 
 ---
 
-# Requirements
+## 11. Installation & Setup
 
-- Python 3.10+
-- A Google Gemini API Key
+### Prerequisites
+- Node.js (v18+)
+- Python (3.10+)
+- A Monad Testnet Wallet with test tokens
 
----
-
-# Installation
-
-## 1. Clone the repository
-
+### Clone the repository
 ```bash
-git clone https://github.com/aryanfulari/AgentPassport.git
-```
-
-Go into the project folder:
-
-```bash
-cd AgentPassport
+git clone https://github.com/aryanfulari/Monad-Lisa.git
+cd Monad-Lisa
 ```
 
 ---
 
-## 2. Create a virtual environment
+## 12. Environment Variables (.env)
+Create a `.env` file in the root directory:
 
-### macOS / Linux
-
-```bash
-python3 -m venv venv
-```
-
-### Windows
-
-```cmd
-python -m venv venv
+```env
+GEMINI_API_KEY=your_gemini_api_key
+# Add your Web3 Provider / Private Keys as required by the blockchain module
 ```
 
 ---
 
-## 3. Activate the virtual environment
+## 13. Running the Project
 
-### macOS / Linux
-
-```bash
-source venv/bin/activate
-```
-
-### Windows (Command Prompt)
-
-```cmd
-venv\Scripts\activate
-```
-
-### Windows (PowerShell)
-
-```powershell
-.\venv\Scripts\Activate.ps1
-```
-
----
-
-## 4. Install dependencies
-
+**Start the Python Backend (FastAPI):**
 ```bash
 pip install -r requirements.txt
+python -m uvicorn api:app --port 8000
 ```
 
----
-
-## 5. Configure the API Key
-
-Create a file named:
-
-```
-.env
-```
-
-Add the following line:
-
-```text
-GEMINI_API_KEY=YOUR_GEMINI_API_KEY
-```
-
-Replace `YOUR_GEMINI_API_KEY` with your own Gemini API key.
-
----
-
-# Running the Project
-
-Run:
-
+**Start the Next.js Frontend:**
+Open a new terminal window:
 ```bash
-python agents.py
-```
-
-The program will prompt you to enter **any task**.
-
-Example tasks:
-
-```
-Write a 100-word paragraph on pollution.
-```
-
-```
-Translate "Good morning" into French.
-```
-
-```
-Explain blockchain in simple words.
-```
-
-```
-Write a Python function that calculates factorial.
-```
-
-The Worker Agent completes the task.
-
-The Judge Agent evaluates the Worker's response and returns:
-
-- Score (0–100)
-- Feedback
-
----
-
-# Architecture
-
-```
-User Task
-     │
-     ▼
-Worker Agent
-     │
-     ▼
-Gemini API
-     │
-     ▼
-Generated Output
-     │
-     ▼
-Judge Agent
-     │
-     ▼
-Gemini API
-     │
-     ▼
-{
-    "score": 95,
-    "feedback": "Accurate answer with good clarity."
-}
+cd frontend
+npm install
+npm run dev
 ```
 
 ---
 
-# Using the Agents
-
-Import the functions:
-
-```python
-from agents import worker_agent, judge_agent
-```
-
-Run the Worker Agent:
-
-```python
-task = "Write a 100-word paragraph on pollution."
-
-output = worker_agent(task)
-```
-
-Evaluate the result:
-
-```python
-result = judge_agent(
-    task,
-    output
-)
-
-print(output)
-
-print(result["score"])
-print(result["feedback"])
-```
+## 14. Usage Guide
+1. Open [http://localhost:3000](http://localhost:3000) in your browser.
+2. View your agent's current Trust Score, Level, and Badges.
+3. In the **Generate & Verify Credential** panel, enter a task (e.g., "Explain Quantum Computing").
+4. Select a Gemini model from the dropdown.
+5. Click **Generate & Verify**. Wait for the transaction to complete.
+6. Click the Monad Explorer link to view your permanent on-chain credential!
 
 ---
 
-# API
-
-## Worker Agent
-
-```python
-worker_agent(task: str) -> str
-```
-
-**Input**
-
-- Any task as a string.
-
-**Returns**
-
-- Gemini's generated response.
+## 15. Example Workflow
+- **Task:** "Write a Python function to calculate the Fibonacci sequence."
+- **Worker Agent:** Outputs the Python code.
+- **Judge Agent:** Evaluates code correctness and efficiency. Assigns a score of `95/100` and feedback: *"Efficient O(n) implementation."*
+- **Blockchain:** Transaction confirmed on Monad Testnet.
+- **Dashboard:** "High Performer" badge unlocked.
 
 ---
 
-## Judge Agent
-
-```python
-judge_agent(task: str, output: str) -> dict
-```
-
-**Input**
-
-- Original task.
-- Worker's output.
-
-**Returns**
-
-```python
-{
-    "score": int,
-    "feedback": str
-}
-```
+## 16. Why Monad?
+Agent interactions require high throughput and instant finality. Traditional blockchains are too slow and expensive to record every micro-action an AI takes. **Monad** provides the extreme EVM performance (10,000 TPS) necessary to log AI agent credentials in real-time without bottlenecks.
 
 ---
 
-# Notes
-
-- The Worker Agent can perform **any natural language task**.
-- The Judge Agent evaluates the quality of the Worker's response.
-- The API key is loaded from `.env`.
-- The `.env` file is intentionally ignored by Git for security.
+## 17. Future Scope
+- **Multi-Agent Swarms:** Tracking credentials for autonomous teams of interacting agents.
+- **Decentralized Judges:** Using a consensus of multiple LLMs to prevent judge bias.
+- **Mainnet Deployment:** Transitioning the passport registry to Monad Mainnet.
 
 ---
 
-# Authors
+## 18. Team Members
+- **Aryan Fulari**
 
-Developed for the **Monad Blitz Hackathon**.
+---
+
+## 19. License
+*MIT License* (Optional - Update as needed)
+
+---
+
+## 20. Acknowledgements
+- Developed for the **Monad Blitz Hackathon**.
+- Powered by the **Google Gemini API**.
