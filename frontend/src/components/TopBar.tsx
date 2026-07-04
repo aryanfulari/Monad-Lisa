@@ -5,7 +5,7 @@ export default function TopBar() {
   const [address, setAddress] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/dashboard')
+    fetch('/api/dashboard')
       .then(r => r.json())
       .then(data => {
         setAddress(data.address);

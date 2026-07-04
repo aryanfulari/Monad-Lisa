@@ -23,10 +23,10 @@ export default function Home() {
   const loadData = async () => {
     try {
       const [dashRes, leadRes, badgeRes, histRes] = await Promise.all([
-        fetch('http://localhost:8000/api/dashboard'),
-        fetch('http://localhost:8000/api/leaderboard'),
-        fetch('http://localhost:8000/api/badges'),
-        fetch('http://localhost:8000/api/history'),
+        fetch('/api/dashboard'),
+        fetch('/api/leaderboard'),
+        fetch('/api/badges'),
+        fetch('/api/history'),
       ]);
       const dashData = await dashRes.json();
       const leadData = await leadRes.json();
@@ -52,7 +52,7 @@ export default function Home() {
     setRunResult(null);
 
     try {
-      const res = await fetch('http://localhost:8000/api/run-pipeline', {
+      const res = await fetch('/api/run-pipeline', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ task: taskInput, model: selectedModel })
