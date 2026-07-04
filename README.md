@@ -1,4 +1,4 @@
-# Monad-Lisa (AgentPassport)
+# AgentPassport
 
 ## 1. One-Line Tagline
 **AI-powered credentials and task execution stored permanently on the high-performance Monad Blockchain.**
@@ -11,7 +11,7 @@ As AI agents become more autonomous, there is no verifiable, immutable record of
 ---
 
 ## 3. Solution
-**Monad-Lisa (AgentPassport)** introduces a dual-agent architecture to solve this. A **Worker Agent** completes tasks, and a **Judge Agent** evaluates the quality of the work. The resulting score and feedback are permanently logged on the **Monad Blockchain**, creating a verifiable, immutable "Passport" for AI models. 
+**AgentPassport** introduces a dual-agent architecture to solve this. A **Worker Agent** completes tasks, and a **Judge Agent** evaluates the quality of the work. The resulting score and feedback are permanently logged on the **Monad Blockchain**, creating a verifiable, immutable "Passport" for AI models. 
 
 ---
 
